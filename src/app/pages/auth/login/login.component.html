@@ -1,0 +1,104 @@
+<section>
+  <div class="container my-8">
+    <h1 class="my-3 text-2xl font-bold capitalize">login</h1>
+
+    <form [formGroup]="user" (submit)="submit()">
+      <!-- Email -->
+      <div class="field">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-envelope"></i>
+          </p-inputGroupAddon>
+          <input
+            pInputText
+            placeholder="Address Email"
+            [autofocus]="true"
+            formControlName="email"
+          />
+        </p-inputGroup>
+
+        <div class="validation-msg">
+          @if (email.dirty && email.touched) { @if(email.getError('required')) {
+          <p-messages
+            [value]="[
+              {
+                severity: 'error',
+                summary: 'validation error ',
+                detail: 'Email Should be required'
+              }
+            ]"
+            [enableService]="false"
+            [closable]="false"
+          />
+          } @if(email.getError('email')) {
+          <p-messages
+            [value]="[
+              {
+                severity: 'error',
+                summary: 'validation error ',
+                detail: 'Invalid Email'
+              }
+            ]"
+            [enableService]="false"
+            [closable]="false"
+          />
+          } }
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i>
+          </p-inputGroupAddon>
+          <input
+            pInputText
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+          />
+        </p-inputGroup>
+
+        <div class="validation-msg">
+          @if (password.dirty && password.touched) {
+          @if(password.getError('required')) {
+          <p-messages
+            [value]="[
+              {
+                severity: 'error',
+                summary: 'validation error ',
+                detail: 'password Should be required'
+              }
+            ]"
+            [enableService]="false"
+            [closable]="false"
+          />
+          }@if(password.getError('minlength')) {
+          <p-messages
+            [value]="[
+              {
+                severity: 'error',
+                summary: 'validation error ',
+                detail: 'password Should be at least 8'
+              }
+            ]"
+            [enableService]="false"
+            [closable]="false"
+          />
+          } }
+        </div>
+      </div>
+
+      <p-button type="submit" label="Login">
+        @if(isLoading) {
+        <div class="mr-3">
+          <p-progressSpinner styleClass="w-2rem h-2rem" ariaLabel="loading" />
+        </div>
+        }
+      </p-button>
+    </form>
+  </div>
+
+  <p-toast />
+</section>
