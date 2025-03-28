@@ -4,6 +4,8 @@ import { CardComponent } from "../../components/card/card.component";
 import { UserService } from '../../services/user.service';
 import { IProduct } from '../../interfaces/iproduct';
 import { PopularProductPipe } from '../../pipes/popular-product.pipe';
+import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { PopularProductPipe } from '../../pipes/popular-product.pipe';
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
-  private readonly _userService: UserService = inject(UserService)
+    private readonly _productService: ProductService = inject(ProductService);
 
   images: any[] | undefined;
   smallProducts: IProduct[] = [];
@@ -26,7 +28,7 @@ export class HomeComponent implements OnInit {
 
     this.images = [
       {
-        itemImageSrc: 'products/prd_1.webp',
+        itemImageSrc: '../../../assets/a.jpg',
         alt: 'Description for Product 1',
         title: 'Product 1'
       },
@@ -49,9 +51,17 @@ export class HomeComponent implements OnInit {
   }
 
   getProducts(): void {
-    this._userService.getProducts().subscribe(data => {
-      this.smallProducts = data.products.slice(0, 4);
-      this.popularProducts = data.products;
+    const storeCart = localStorage.getItem('cartState')
+    const cartState = storeCart ? JSON.parse(storeCart) : {};
+
+    this._productService.getProducts().subscribe((data: IProduct[]) => {
+      this.smallProducts = data.slice(0, 4);
+      this.popularProducts = data.map((product: IProduct) => {
+        return {
+          ...product,
+          isAddedToCart: cartState[product._id] || false
+        }
+      });
     });
   }
 }

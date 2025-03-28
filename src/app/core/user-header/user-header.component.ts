@@ -9,6 +9,7 @@ import { RippleModule } from 'primeng/ripple';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-user-header',
@@ -20,6 +21,7 @@ import { Router } from '@angular/router';
 })
 export class UserHeaderComponent implements OnInit {
   private readonly _userService: UserService = inject(UserService);
+  private readonly _cartService: CartService = inject(CartService);
   private readonly _authService: AuthService = inject(AuthService);
   private readonly _route: Router = inject(Router);
 
@@ -48,6 +50,10 @@ export class UserHeaderComponent implements OnInit {
         path: 'categories'
       },
     ];
+
+    this._cartService.countOfCart.subscribe(next => {
+      this.cartCount = next;
+    })
   }
 
   getName(): void {
@@ -57,7 +63,7 @@ export class UserHeaderComponent implements OnInit {
   getCartCount(): void {
     const _id = localStorage.getItem('token') ?? '';
 
-    this._userService.getCartCount(_id).subscribe(data => this.cartCount = data.cart.length);
+    this._cartService.getCartCount(_id).subscribe(data => this.cartCount = data.cart.length);
   }
 
   logout(): void {

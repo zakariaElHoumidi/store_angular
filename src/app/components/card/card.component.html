@@ -11,7 +11,7 @@
       class=""
     >
       <figure
-        [routerLink]="['/cart', product.id]"
+        [routerLink]="['/cart', product._id]"
         routerLinkActive="router-link-active"
         [ngClass]="{ ' lg:w-9rem md:w-6rem': isSmall }"
         class="m-1 shadow-2 border-round-2xl overflow-hidden cursor-pointer"
@@ -49,15 +49,25 @@
           </div>
         </div>
       </div>
-      @if(!isSmall) {
+      @if(!isSmall) { @if (!product.isAddedToCart) {
       <p-button
+        (click)="addToCart(product._id); product.isAddedToCart = true"
         label="Add to cart"
         severity="warning"
         styleClass="my-2 uppercase w-full"
         icon="pi pi-cart-plus text-2xl"
         iconPos="right"
       />
-      }
+      } @if(product.isAddedToCart) {
+      <p-button
+      [routerLink]="['/cart']"
+        label="Go To cart"
+        severity="contrast"
+        styleClass="my-2 uppercase w-full"
+        icon="pi pi-shopping-cart text-2xl"
+        iconPos="right"
+      />
+      } }
     </div>
   </div>
   }

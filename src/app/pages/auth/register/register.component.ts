@@ -5,6 +5,7 @@ import { IRegister } from '../../../interfaces/iuser';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { CustomFormsModule } from '../../../modules/custom-forms/custom-forms.module';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ import { CustomFormsModule } from '../../../modules/custom-forms/custom-forms.mo
 export class RegisterComponent {
   constructor(
     private _authService: AuthService,
-    private _messageService: MessageService,
+    private _notificationService: NotificationService,
     private _router: Router) {
     this.initControls();
     this.initGroups();
@@ -85,7 +86,7 @@ export class RegisterComponent {
     this._authService.register(user).subscribe({
       next: (res) => {
         if (res._id) {
-          this.showToast('success', 'Success', 'User Registered Successfully');
+          this._notificationService.showSuccess('Success', 'User Registered Successfully');
           const {email, password} = this.user.value;
 
           this._authService.login({email, password}).subscribe({
@@ -102,14 +103,10 @@ export class RegisterComponent {
       },
       error: (err) => {
         console.error(err.error.error)
-        this.showToast('error', 'Error', err.error.error)
+        this._notificationService.showError('Error', err.error.error)
         this.isLoading = false;
       }
 
     })
-  }
-
-  showToast(severity: string, summary: string, detail: string) {
-    this._messageService.add({ severity: severity, summary: summary, detail: detail });
   }
 }

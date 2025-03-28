@@ -6,6 +6,7 @@ import { CustomFormsModule } from '../../../modules/custom-forms/custom-forms.mo
 import { ILogin } from '../../../interfaces/iuser';
 import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ import { UserService } from '../../../services/user.service';
 export class LoginComponent {
   constructor(
     private _authService: AuthService,
-    private _messageService: MessageService,
+    private _notificationService: NotificationService,
     private _router: Router,
     private _userService: UserService) {
     this.initControls();
@@ -63,7 +64,7 @@ export class LoginComponent {
     this._authService.login(user).subscribe({
       next: (res) => {
         if (res._id) {
-          this.showToast('success', 'Success', 'User Logged In Successfully');
+          this._notificationService.showSuccess('Success', 'User Logged In Successfully');
           localStorage.setItem('token', res._id);
           this._userService.userName.next(res.name);
         }
@@ -75,14 +76,10 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error(err.error.error)
-        this.showToast('error', 'Error', err.error.error)
+        this._notificationService.showError('Error', err.error.error)
         this.isLoading = false;
       }
 
     })
-  }
-
-  showToast(severity: string, summary: string, detail: string) {
-    this._messageService.add({ severity: severity, summary: summary, detail: detail });
   }
 }

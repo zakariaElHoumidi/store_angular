@@ -7,14 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { AutoFocusModule } from 'primeng/autofocus';
 
 
 @NgModule({
   imports: [ProgressSpinnerModule, ToastModule, MessagesModule, ButtonModule, FormsModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ReactiveFormsModule, AutoFocusModule],
   exports: [ProgressSpinnerModule, ToastModule, MessagesModule, ButtonModule, FormsModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ReactiveFormsModule, AutoFocusModule],
-  providers: [MessageService]
 })
 
 export class CustomFormsModule { }
