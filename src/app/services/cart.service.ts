@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { baseUrl } from '../env/apiRoot';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
   private readonly _httpClient: HttpClient = inject(HttpClient);
@@ -15,7 +15,7 @@ export class CartService {
     return this._httpClient.get(`${baseUrl}/my-cart/${id}`);
   }
 
-  addToCart(data: {productId: string, userId: string}): Observable<any> {
-    return this._httpClient.post(`${baseUrl}/add-to-cart`, {data});
+  addToCart(data: { productId: string; userId: string }): Observable<any> {
+    return this._httpClient.post(`${baseUrl}/add-to-cart`, { ...data });
   }
 }
