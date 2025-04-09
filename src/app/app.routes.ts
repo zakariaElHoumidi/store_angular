@@ -40,26 +40,26 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
     children: [
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
-        loadComponent: ()=>import('./pages/home/home.component').then(component=>component.HomeComponent)
+        loadComponent: () => import('./pages/home/home.component').then(component => component.HomeComponent)
       },
       {
-        path: 'cart/:id',
-        loadComponent: ()=>import('./pages/cart/cart.component').then(component=>component.CartComponent)
+        path: 'cart',
+        loadComponent: () => import('./pages/cart/cart.component').then(component => component.CartComponent)
       },
       {
         path: 'products',
-        loadComponent: ()=>import('./pages/products/products.component').then(component=>component.ProductsComponent)
+        loadComponent: () => import('./pages/products/products.component').then(component => component.ProductsComponent)
       },
       {
         path: 'details',
-        loadComponent: ()=>import('./pages/details/details.component').then(component=>component.DetailsComponent)
+        loadComponent: () => import('./pages/details/details.component').then(component => component.DetailsComponent)
       },
       {
         path: 'categories',
-        loadComponent: ()=>import('./pages/category/category.component').then(component=>component.CategoryComponent)
+        loadComponent: () => import('./pages/category/category.component').then(component => component.CategoryComponent)
       }
     ]
   },

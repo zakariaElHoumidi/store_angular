@@ -14,7 +14,7 @@ export class CartService {
   getCartCount(id: string): Observable<any> {
     return this._httpClient.get(`${baseUrl}/my-cart/${id}`);
   }
-
+  
   addToCart(data: { productId: string; userId: string }): Observable<any> {
     return this._httpClient.post(`${baseUrl}/add-to-cart`, { ...data });
   }

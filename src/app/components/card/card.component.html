@@ -60,7 +60,7 @@
       />
       } @if(product.isAddedToCart) {
       <p-button
-      [routerLink]="['/cart']"
+        [routerLink]="['/cart']"
         label="Go To cart"
         severity="contrast"
         styleClass="my-2 uppercase w-full"
@@ -70,5 +70,20 @@
       } }
     </div>
   </div>
-  }
+  }@empty { @if(!isSmall) {
+  <div class="flex-1 text-center">
+    <app-empty></app-empty>
+    <h5 class="capitalize">
+      No product to show for <span class="danger">{{ searchKey }}</span>
+    </h5>
+    <p-button
+      [routerLink]="['/home']"
+      label="Back to home"
+      severity="warning"
+      styleClass="my-2 uppercase"
+      icon="pi pi-home text-2xl"
+      iconPos="right"
+    />
+  </div>
+  }}
 </div>
